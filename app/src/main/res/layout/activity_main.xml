@@ -19,7 +19,6 @@
             android:layout_width="30dp"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:src="@tools:sample/avatars"
             app:srcCompat="@drawable/fruitshoplogo" />
 
         <TextView
@@ -27,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:fontFamily="@font/cream"
+            android:fontFamily="@font/creamdemo"
             android:gravity="center|left"
             android:text="FruitShop"
             android:textColor="@color/web_green"
@@ -62,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:fontFamily="@font/cream"
+            android:fontFamily="@font/creamdemo"
             android:text="Accueil"
             android:textColor="@color/web_red"
             android:textSize="25dp" />
@@ -73,7 +72,6 @@
             android:layout_height="50dp"
             android:layout_marginRight="15dp"
             android:layout_weight="0"
-            android:src="@tools:sample/avatars"
             app:srcCompat="@drawable/cart" />
 
     </LinearLayout>

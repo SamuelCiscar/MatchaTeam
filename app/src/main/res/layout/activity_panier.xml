@@ -73,7 +73,6 @@
             android:layout_height="match_parent"
             android:layout_weight="0"
             android:background="@color/bg"
-            android:src="@tools:sample/avatars"
             app:srcCompat="@drawable/home"
             tools:srcCompat="@drawable/home" />
 
