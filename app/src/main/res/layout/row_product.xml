@@ -14,9 +14,9 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="250dp"
+            android:layout_width="350dp"
             android:layout_height="150dp"
-            android:src="@tools:sample/avatars" />
+            app:srcCompat="@drawable/ic_launcher_foreground" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:fontFamily="@font/cream"
+                android:fontFamily="@font/creamdemo"
                 android:text="TextView"
                 android:textColor="@color/web_purple"
                 android:textSize="20dp" />
@@ -55,16 +55,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:fontFamily="@font/cream"
+                android:fontFamily="@font/creamdemo"
                 android:text="TextView"
                 android:textColor="@color/web_purple" />
+
+            <Spinner
+                android:id="@+id/spinner_Quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
 
             <ImageView
                 android:id="@+id/bt_AddCart"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="0"
-                android:src="@tools:sample/avatars"
                 app:srcCompat="@drawable/addcart" />
 
         </LinearLayout>
