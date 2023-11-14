@@ -6,12 +6,10 @@ package com.example.matchateam.Beans;
 import java.util.Date;
 
 public class CommandeBean {
-    private int id_commande;
     private String telephone_commande;
     private String nom_commande;
     private String prenom_commande;
     private double prix_total_commande;
-    private Date date_commande;
 
     // Constructeur par défaut
     public CommandeBean() {
@@ -19,15 +17,6 @@ public class CommandeBean {
     }
 
     // Setters et Getters pour chaque attribut
-
-    public int getId_commande() {
-        return id_commande;
-    }
-
-    public void setId_commande(int id_commande) {
-        this.id_commande = id_commande;
-    }
-
     public String getTelephone_commande() {
         return telephone_commande;
     }
@@ -59,13 +48,4 @@ public class CommandeBean {
     public void setPrix_total_commande(double prix_total_commande) {
         this.prix_total_commande = prix_total_commande;
     }
-
-    public Date getDate_commande() {
-        return date_commande;
-    }
-
-    public void setDate_commande(Date date_commande) {
-        this.date_commande = date_commande;
-    }
 }
-
