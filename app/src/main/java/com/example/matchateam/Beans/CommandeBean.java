@@ -15,7 +15,7 @@ public class CommandeBean {
 
     // Constructeur par défaut
     public CommandeBean() {
-        // Initialise les valeurs par défaut ou utilisez les setters pour les initialiser
+        // Initialise les valeurs par défaut
     }
 
     // Setters et Getters pour chaque attribut
