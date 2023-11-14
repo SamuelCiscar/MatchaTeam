@@ -37,4 +37,21 @@ public class RequestUtils {
         }
         return null;
     }
+
+    public String sendGet(String url) {
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()) {
+                return response.body() != null ? response.body().string() : null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
