@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.matchateam.Beans.ProductBean;
+import com.example.matchateam.CartManager;
 import com.example.matchateam.PanierActivity;
 import com.example.matchateam.ProductCartItem;
 import com.example.matchateam.databinding.RowProductBinding;
@@ -52,10 +53,10 @@ public class ProductListAdapter extends ListAdapter<ProductBean, ProductListAdap
 
         holder.binding.btAddCart.setOnClickListener(view -> {
             int selectedQuantity = (int) holder.binding.spinnerQuantity.getSelectedItem();
-            // Calculer le prix total en fonction de la quantité sélectionnée et du prix unitaire du produit
             double totalPrice = selectedQuantity * item.getPrix_produit();
-            ProductCartItem cartItem = new ProductCartItem(item, selectedQuantity, totalPrice);
-            System.out.println(cartItem.getTotalPrice());
+
+            CartManager.getInstance().addToCart(item, selectedQuantity, totalPrice);
+            System.out.println(CartManager.getInstance().getCartItems());
         });
     }
 

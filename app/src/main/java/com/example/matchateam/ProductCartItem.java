@@ -13,29 +13,15 @@ public class ProductCartItem {
         this.totalPrice = totalPrice;
     }
 
-    // Getters et setters pour accéder et modifier les attributs
-
     public ProductBean getProduct() {
         return product;
-    }
-
-    public void setProduct(ProductBean product) {
-        this.product = product;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public double getTotalPrice() {
         return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 }
