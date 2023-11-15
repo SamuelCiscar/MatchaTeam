@@ -137,7 +137,7 @@
         android:ems="20"
         android:gravity="center"
         android:inputType="text"
-        android:text="Nom..."
+        android:hint="Nom..."
         android:textColor="#918B8B" />
 
     <EditText
@@ -151,7 +151,7 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="text"
-        android:text="Prenom..."
+        android:hint="Prenom..."
         android:textColor="#918B8B" />
 
     <EditText
@@ -164,7 +164,7 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="text"
-        android:text="Tel..."
+        android:hint="Tel..."
         android:textColor="#918B8B" />
 
     <Button
