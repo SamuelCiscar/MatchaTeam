@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.matchateam.Beans.ProductBean;
 import com.example.matchateam.databinding.RowProductBinding;
+import com.squareup.picasso.Picasso;
 
 public class ProductListAdapter extends ListAdapter<ProductBean, ProductListAdapter.ViewHolder> {
     public ProductListAdapter() {
@@ -26,7 +27,11 @@ public class ProductListAdapter extends ListAdapter<ProductBean, ProductListAdap
 
     @Override
     public void onBindViewHolder(@NonNull ProductListAdapter.ViewHolder holder, int position) {
-
+        ProductBean item = getItem(position);
+        String imageUrl = item.getImage_produit();
+        Picasso.get().load(imageUrl).into(holder.binding.ivImgProduct);
+        holder.binding.tvProduct.setText(item.getNom_produit());
+        holder.binding.etQty.setText(item.getPrix_produit() + "€");
     }
 
     // Classe qui stocke les composants graphiques d'une ligne
