@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -53,7 +53,7 @@
                 android:orientation="vertical"></LinearLayout>
 
             <TextView
-                android:id="@+id/etQty"
+                android:id="@+id/tv_Price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -69,7 +69,7 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/bt_delProd"
+                android:id="@+id/bt_AddCart"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="0"
