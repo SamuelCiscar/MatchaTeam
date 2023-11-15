@@ -60,4 +60,3 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 }
-

@@ -3,7 +3,7 @@ package com.example.matchateam.Beans;
 public class ProductBean {
     private int id_produit;
     private double prix_produit;
-    private String nom_produit;
+    private String nomProduit;
     private String image_produit;
 
     // Constructeur par défaut
@@ -27,10 +27,10 @@ public class ProductBean {
     }
 
     public String getNom_produit() {
-        return nom_produit;
+        return nomProduit;
     }
     public void setNom_produit(String nom_produit) {
-        this.nom_produit = nom_produit;
+        this.nomProduit = nom_produit;
     }
 
     public String getImage_produit() {
