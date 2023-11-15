@@ -1,5 +1,6 @@
 package com.example.matchateam;
 
+import com.example.matchateam.Beans.CommandeBean;
 import com.example.matchateam.Beans.ProductBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,5 +49,9 @@ public class RequestUtils {
 
         // Retourner la donnée
         return productList;
+    }
+
+    public static String sendCommand(CommandeBean commande){
+        return null;
     }
 }

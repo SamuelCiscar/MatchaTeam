@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.matchateam.Adapters.ProductListAdapter;
+import com.example.matchateam.Beans.ProductBean;
 import com.example.matchateam.databinding.ActivityMainBinding;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     ActivityMainBinding binding;
@@ -17,6 +21,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(binding.getRoot());
 
         binding.btCart.setOnClickListener(this);
+
+        new Thread(() -> {
+            try {
+                testGetAllProducts();
+                // Appel de la méthode getAllProducts depuis la classe RequestUtils
+                List<ProductBean> productBeans = RequestUtils.getAllProducts();
+
+                if (productBeans != null) {
+                    runOnUiThread(() -> {
+                        ProductListAdapter adapter = new ProductListAdapter();
+                        binding.rvProducts.setAdapter(adapter);
+                    });
+                } else {
+                    System.out.println("Erreur lors de la récupération des produits");
+                }
+            } catch (final Exception e) {
+                e.printStackTrace();
+                // Gérer l'exception et afficher un message d'erreur
+                System.err.println("Erreur: " + e.getMessage());
+            }
+        }).start();
     }
 
     @Override
@@ -24,6 +49,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v == binding.btCart){
             Intent intent = new Intent(this, PanierActivity.class);
             startActivity(intent);
+        }
+    }
+
+    // Méthode de test pour simuler l'appel à getAllProducts
+    private void testGetAllProducts() {
+        try {
+            List<ProductBean> productList = RequestUtils.getAllProducts();
+            // Traiter les données reçues ici
+            for (ProductBean product : productList) {
+                // Faire quelque chose avec chaque produit
+                System.out.println("MainActivity - Product: " + product.getNom_produit());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Gérer les erreurs ici
+            System.out.println("MainActivity - Error fetching products from server" + e.getMessage());
         }
     }
 }
