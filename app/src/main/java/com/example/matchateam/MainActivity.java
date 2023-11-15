@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         new Thread(() -> {
             try {
+                // Méthode de test
                 testGetAllProducts();
                 // Appel de la méthode getAllProducts depuis la classe RequestUtils
                 List<ProductBean> productBeans = RequestUtils.getAllProducts();
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             } catch (final Exception e) {
                 e.printStackTrace();
-                // Gérer l'exception et afficher un message d'erreur
                 System.err.println("Erreur: " + e.getMessage());
             }
         }).start();
@@ -52,18 +52,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     // Méthode de test pour simuler l'appel à getAllProducts
     private void testGetAllProducts() {
         try {
             List<ProductBean> productList = RequestUtils.getAllProducts();
-            // Traiter les données reçues ici
+            // Traiter les données reçues ici:
             for (ProductBean product : productList) {
-                // Faire quelque chose avec chaque produit
+                // Afficher chaque produit:
                 System.out.println("MainActivity - Product: " + product.getNom_produit());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // Gérer les erreurs ici
             System.out.println("MainActivity - Error fetching products from server" + e.getMessage());
         }
     }
