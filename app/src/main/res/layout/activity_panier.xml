@@ -99,6 +99,11 @@
         android:textColor="@color/web_purple"
         android:textSize="20dp" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcViewPanier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="10dp"
@@ -122,8 +127,9 @@
 
     <EditText
         android:id="@+id/etName"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="20px"
         android:layout_marginBottom="20px"
         android:background="@color/white"
@@ -136,8 +142,10 @@
 
     <EditText
         android:id="@+id/etprenom"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20px"
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:ems="10"
@@ -148,15 +156,16 @@
 
     <EditText
         android:id="@+id/editTextPhone"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:ems="10"
         android:gravity="center"
         android:inputType="text"
         android:text="Tel..."
-        android:textColor="#918B8B"/>
+        android:textColor="#918B8B" />
 
     <Button
         android:id="@+id/btnValidate"
@@ -165,9 +174,14 @@
         android:layout_gravity="center"
         android:layout_margin="20px"
         android:backgroundTint="@color/white"
+        android:paddingLeft="12dp"
+        android:paddingTop="3dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="3dp"
         android:shape="rectangle"
         android:text="Valider"
         android:textColor="@color/web_purple"
-        app:cornerRadius="0dp" />
+        app:cornerRadius="0dp"
+        app:iconPadding="4dp" />
 
 </LinearLayout>
