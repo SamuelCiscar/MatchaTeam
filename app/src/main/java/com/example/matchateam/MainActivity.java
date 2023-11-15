@@ -1,6 +1,7 @@
 package com.example.matchateam;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     runOnUiThread(() -> {
                         ProductListAdapter adapter = new ProductListAdapter();
                         binding.rvProducts.setAdapter(adapter);
+                        binding.rvProducts.setLayoutManager(new LinearLayoutManager(this));
+                        // Pour soumettre la liste de produits à l'adaptateur
+                        adapter.submitList(productBeans);
+
                     });
                 } else {
                     System.out.println("Erreur lors de la récupération des produits");
