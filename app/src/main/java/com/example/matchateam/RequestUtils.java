@@ -1,8 +1,11 @@
 package com.example.matchateam;
 
+import com.example.matchateam.Beans.ProductBean;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -11,7 +14,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RequestUtils {
-    private static final String MON_API = "urlApi";
+    private static final String MON_API = "http://90.1.172.128:8080/api";
     private final Gson gson;
     private final OkHttpClient client;
 
@@ -20,38 +23,30 @@ public class RequestUtils {
         this.client = new OkHttpClient();
     }
 
-    public String sendPost(String url, String jsontoSend) {
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), jsontoSend);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
+    public static String sendGet(String url) throws Exception{
+        System.out.println("url: " + url);
+        OkHttpClient client = new OkHttpClient();
 
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.isSuccessful()) {
-                return response.body() != null ? response.body().string() : null;
+        // Création de la requête
+        Request request = new Request.Builder().url(url).build();
+
+        // Le try-with ressource doc ici
+        // Nous permet de fermer la réponse en cas de succès ou d'échec (dans le finally)
+        try(Response response = client.newCall(request).execute()){
+            if(!response.isSuccessful()){
+                throw new IOException("Unexpected code " + response);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            return response.body().string();
         }
-        return null;
     }
 
-    public String sendGet(String url) {
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
+    public static List<ProductBean> getAllProducts() throws Exception{
+        String json = sendGet(MON_API + "/produits");
 
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.isSuccessful()) {
-                return response.body() != null ? response.body().string() : null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        // Parser le JSON avec le bon bean et GSON
+        List<ProductBean> productList = new Gson().fromJson(json, new TypeToken<List<ProductBean>>(){}.getType());
+
+        // Retourner la donnée
+        return productList;
     }
 }
