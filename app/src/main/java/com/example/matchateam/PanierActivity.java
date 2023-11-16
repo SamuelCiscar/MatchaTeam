@@ -47,7 +47,7 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
         recyclerView.setAdapter(cartItemAdapter);
 
         // Autres initialisations
-        textViewPrix = findViewById(R.id.prixUpdt);
+        textViewPrix = binding.prixUpdt;
         editTextPhone = binding.editTextPhone;
         etprenom = binding.etprenom;
         etName = binding.etName;
@@ -65,8 +65,6 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
         // Mettez à jour le prix total une fois que les éléments sont chargés
         updateTotalPrice();
     }
-
-
 
     // Méthode pour mettre à jour le prix total et le TextView
     public void updateTotalPrice() {
@@ -88,9 +86,6 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
 
         return total;
     }
-
-
-
 
     @Override
     public void onClick(View v) {
@@ -119,32 +114,47 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
             if (!nom.isEmpty() && !prenom.isEmpty() && !telephone.isEmpty()) {
                 // Si tous les champs sont remplis, créer une nouvelle commande
                 CommandeBean commande = new CommandeBean();
-
+                commande.setNom_commande(nom);
+                commande.setPrenom_commande(prenom);
+                commande.setTelephone_commande(telephone);
+                commande.setPrix_total_commande(calculateTotalPrice());
+                List<ProductCartItem> produits = cartItemAdapter.getCartItems();
+                commande.setProduits(produits);
                 // Convertir la commande en JSON
                 String commandeJson = new Gson().toJson(commande);
 
+                System.out.println(commandeJson);
+
                 // Envoyer la commande au serveur
-                String response = RequestUtils.sendCommand(commande);
+                new Thread(() -> {
+                    try {
+                        String response = RequestUtils.sendCommand(commandeJson);
+                        runOnUiThread(() -> {
+                            if (response != null) {
+                                // Afficher un message de succès
+                                Toast.makeText(this, "Votre commande a été envoyée", Toast.LENGTH_SHORT).show();
 
-                // Vérifier la réponse du serveur
-                if (response != null) {
-                    // Afficher un message de succès
-                    Toast.makeText(this, "Votre commande a été envoyée", Toast.LENGTH_SHORT).show();
-
-                    // Vider le contenu des EditText
-                    etName.setText("");
-                    etprenom.setText("");
-                    editTextPhone.setText("");
-                } else {
-                    // Afficher un message d'erreur
-                    Toast.makeText(this, "Erreur lors de l'envoi de la commande", Toast.LENGTH_SHORT).show();
-                }
+                                // Vider le contenu des EditText
+                                etName.setText("");
+                                etprenom.setText("");
+                                editTextPhone.setText("");
+                            } else {
+                                // Afficher un message d'erreur
+                                Toast.makeText(this, "Erreur lors de l'envoi de la commande", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        runOnUiThread(() -> {
+                            // Afficher un message d'erreur en cas d'exception
+                            Toast.makeText(this, "Erreur lors de l'envoi de la commande", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }).start();
             } else {
                 // Si l'un des champs est vide, afficher un message demandant de remplir tous les champs
                 Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
-
 }

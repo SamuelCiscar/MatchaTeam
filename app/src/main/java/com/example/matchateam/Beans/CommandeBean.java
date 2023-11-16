@@ -3,13 +3,25 @@
 
 package com.example.matchateam.Beans;
 
-import java.util.Date;
+import com.example.matchateam.ProductCartItem;
+
+import java.util.List;
 
 public class CommandeBean {
     private String telephone_commande;
     private String nom_commande;
     private String prenom_commande;
     private double prix_total_commande;
+
+    private List<ProductCartItem> produits; // Ajout de la liste de produits
+
+    public List<ProductCartItem> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<ProductCartItem> produits) {
+        this.produits = produits;
+    }
 
     // Constructeur par défaut
     public CommandeBean() {
