@@ -57,7 +57,7 @@ public class ProductListAdapter extends ListAdapter<ProductBean, ProductListAdap
             double totalPrice = selectedQuantity * item.getPrix_produit();
 
             CartManager.getInstance().addToCart(item, selectedQuantity, totalPrice);
-            Toast.makeText(holder.itemView.getContext(), selectedQuantity + " " + item.getNom_produit() + " ajoutées au panier", Toast.LENGTH_SHORT).show();
+            Toast.makeText(holder.itemView.getContext(), selectedQuantity + "kg de " + item.getNom_produit() + " ajoutées au panier", Toast.LENGTH_SHORT).show();
         });
     }
 
