@@ -16,6 +16,7 @@
             android:id="@+id/iv_ImgProduct"
             android:layout_width="350dp"
             android:layout_height="150dp"
+            android:background="#FFFFFF"
             app:srcCompat="@drawable/ic_launcher_foreground" />
 
         <LinearLayout
@@ -48,7 +49,7 @@
                     android:gravity="center_horizontal"
                     android:text="TextView"
                     android:textColor="@color/web_purple"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/tv_Price"

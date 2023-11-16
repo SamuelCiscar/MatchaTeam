@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -40,7 +41,7 @@ public class ProductListAdapter extends ListAdapter<ProductBean, ProductListAdap
         Picasso.get().load(imageUrl).into(holder.binding.ivImgProduct);
 
         holder.binding.tvProduct.setText(item.getNom_produit());
-        holder.binding.tvPrice.setText(item.getPrix_produit() + "€");
+        holder.binding.tvPrice.setText(item.getPrix_produit() + "/kg");
 
         // Configurer le Spinner avec un adaptateur pour les quantités disponibles
         List<Integer> quantities = new ArrayList<>();
@@ -56,7 +57,7 @@ public class ProductListAdapter extends ListAdapter<ProductBean, ProductListAdap
             double totalPrice = selectedQuantity * item.getPrix_produit();
 
             CartManager.getInstance().addToCart(item, selectedQuantity, totalPrice);
-            System.out.println(CartManager.getInstance().getCartItems());
+            Toast.makeText(holder.itemView.getContext(), selectedQuantity + " " + item.getNom_produit() + " ajoutées au panier", Toast.LENGTH_SHORT).show();
         });
     }
 
