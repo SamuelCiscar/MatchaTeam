@@ -58,6 +58,11 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public List<ProductCartItem> getCartItems() {
+        return cartItems;
+    }
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvProduct;
         TextView etQty;
@@ -72,4 +77,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             btDelProd = itemView.findViewById(R.id.bt_delProd);
         }
     }
+
+
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +26,18 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
     private RecyclerView recyclerView;
     private CartItemAdapter cartItemAdapter;
 
+    private TextView textViewPrix;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panier);
         binding = ActivityPanierBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        textViewPrix = findViewById(R.id.prixUpdt);
+
+
 
 
         editTextPhone = binding.editTextPhone;
@@ -59,6 +66,30 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
         cartItemAdapter.setCartItems(cartItems);
 
         recyclerView.setAdapter(cartItemAdapter);
+
+        // Mettez à jour le prix total une fois que les éléments sont chargés
+        updateTotalPrice();
+    }
+
+    // Méthode pour mettre à jour le prix total et le TextView
+    private void updateTotalPrice() {
+        double totalPrice = calculateTotalPrice(); // Méthode pour calculer le prix total
+        String formattedPrice = String.format("%.2f", totalPrice); // Formater le prix
+
+        // Mettre à jour le TextView avec le nouveau prix total
+        textViewPrix.setText(formattedPrice + " €");
+    }
+
+    // Méthode pour calculer le prix total des produits dans le panier
+    private double calculateTotalPrice() {
+        double total = 0;
+
+        // Traversez la liste des produits pour obtenir le prix total
+        for (ProductCartItem item : cartItemAdapter.getCartItems()) {
+            total += item.getTotalPrice();
+        }
+
+        return total;
     }
 
 
