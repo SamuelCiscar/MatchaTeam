@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.matchateam.PanierActivity;
 import com.example.matchateam.ProductCartItem;
 import com.example.matchateam.R;
 
@@ -16,12 +17,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder> {
-    // Initialisation de la liste cartItems
     private List<ProductCartItem> cartItems = new ArrayList<>();
+    private OnDeleteItemClickListener onDeleteItemClickListener;
 
     public CartItemAdapter() {
     }
 
+    public interface OnDeleteItemClickListener {
+        void onDeleteItemClicked(int position);
+    }
+
+    public void setOnDeleteItemClickListener(OnDeleteItemClickListener listener) {
+        this.onDeleteItemClickListener = listener;
+    }
 
     @NonNull
     @Override
@@ -32,20 +40,31 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // Récupérer l'élément du panier à la position donnée
         ProductCartItem cartItem = cartItems.get(position);
 
-        // Mettre à jour les vues de ViewHolder avec les données du produit du panier
         holder.tvProduct.setText(cartItem.getProduct().getNom_produit());
         holder.etQty.setText(String.valueOf(cartItem.getQuantity()));
         holder.txtPrix.setText(String.valueOf(cartItem.getTotalPrice()));
 
-        // Ajoutez ici la logique pour supprimer un élément du panier lorsqu'on clique sur le bouton de suppression
         holder.btDelProd.setOnClickListener(v -> {
-            // Supprimer l'élément du panier
             cartItems.remove(position);
-            notifyDataSetChanged(); // Actualiser l'affichage après la suppression
+            notifyDataSetChanged();
+
+
+
+            if (onDeleteItemClickListener != null) {
+                onDeleteItemClickListener.onDeleteItemClicked(position);
+            }
+
+            // Mettez à jour le prix total après la suppression de l'élément
+            ((PanierActivity) holder.itemView.getContext()).updateTotalPrice();
         });
+    }
+
+    // Ajouter une méthode pour supprimer un élément du panier
+    public void deleteItem(int position) {
+        cartItems.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
@@ -62,7 +81,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         return cartItems;
     }
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvProduct;
         TextView etQty;
@@ -77,6 +95,4 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             btDelProd = itemView.findViewById(R.id.bt_delProd);
         }
     }
-
-
 }

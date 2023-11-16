@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.matchateam.Adapters.CartItemAdapter;
+import com.example.matchateam.Beans.CommandeBean;
 import com.example.matchateam.databinding.ActivityPanierBinding;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -31,23 +33,10 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_panier);
         binding = ActivityPanierBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        textViewPrix = findViewById(R.id.prixUpdt);
-
-
-
-
-        editTextPhone = binding.editTextPhone;
-        etprenom = binding.etprenom;
-        etName = binding.etName;
-
-        binding.logohome.setOnClickListener(this);
-        binding.btnValidate.setOnClickListener(this);
-
-        // Récupérez votre RecyclerView à partir de votre layout XML
+        // Obtenez votre RecyclerView à partir de votre layout XML
         recyclerView = binding.rcViewPanier;
 
         // Configurez le LayoutManager pour le RecyclerView
@@ -57,6 +46,14 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
         cartItemAdapter = new CartItemAdapter(); // Vous devrez passer des données à l'adaptateur ici
         recyclerView.setAdapter(cartItemAdapter);
 
+        // Autres initialisations
+        textViewPrix = findViewById(R.id.prixUpdt);
+        editTextPhone = binding.editTextPhone;
+        etprenom = binding.etprenom;
+        etName = binding.etName;
+
+        binding.logohome.setOnClickListener(this);
+        binding.btnValidate.setOnClickListener(this);
 
         // Obtenez les éléments du panier depuis CartManager (exemple)
         CartManager cartManager = CartManager.getInstance();
@@ -65,14 +62,14 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
         // Passez les éléments du panier à l'adaptateur
         cartItemAdapter.setCartItems(cartItems);
 
-        recyclerView.setAdapter(cartItemAdapter);
-
         // Mettez à jour le prix total une fois que les éléments sont chargés
         updateTotalPrice();
     }
 
+
+
     // Méthode pour mettre à jour le prix total et le TextView
-    private void updateTotalPrice() {
+    public void updateTotalPrice() {
         double totalPrice = calculateTotalPrice(); // Méthode pour calculer le prix total
         String formattedPrice = String.format("%.2f", totalPrice); // Formater le prix
 
@@ -93,8 +90,22 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+
+
     @Override
     public void onClick(View v) {
+
+        if (v.getId() == R.id.bt_delProd) {
+            // Obtenez la position de l'élément à supprimer
+            int position = recyclerView.getChildAdapterPosition((View) v.getParent());
+
+            // Supprimez l'élément du panier à la position donnée
+            cartItemAdapter.getCartItems().remove(position);
+            cartItemAdapter.notifyItemRemoved(position);
+
+            // Mettez à jour le prix total
+            updateTotalPrice();
+        }
         if (v == binding.logohome) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -106,17 +117,34 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
             String telephone = editTextPhone.getText().toString().trim();
 
             if (!nom.isEmpty() && !prenom.isEmpty() && !telephone.isEmpty()) {
-                // Si tous les champs sont remplis, afficher le toast de validation
-                Toast.makeText(this, "Votre commande est validée", Toast.LENGTH_SHORT).show();
-                // Vider le contenu des EditText
-                etName.setText("");
-                etprenom.setText("");
-                editTextPhone.setText("");
+                // Si tous les champs sont remplis, créer une nouvelle commande
+                CommandeBean commande = new CommandeBean();
+
+                // Convertir la commande en JSON
+                String commandeJson = new Gson().toJson(commande);
+
+                // Envoyer la commande au serveur
+                String response = RequestUtils.sendCommand(commande);
+
+                // Vérifier la réponse du serveur
+                if (response != null) {
+                    // Afficher un message de succès
+                    Toast.makeText(this, "Votre commande a été envoyée", Toast.LENGTH_SHORT).show();
+
+                    // Vider le contenu des EditText
+                    etName.setText("");
+                    etprenom.setText("");
+                    editTextPhone.setText("");
+                } else {
+                    // Afficher un message d'erreur
+                    Toast.makeText(this, "Erreur lors de l'envoi de la commande", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 // Si l'un des champs est vide, afficher un message demandant de remplir tous les champs
                 Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
-
             }
         }
+
     }
+
 }
