@@ -7,8 +7,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.matchateam.Adapters.CartItemAdapter;
 import com.example.matchateam.databinding.ActivityPanierBinding;
+
+import java.util.List;
 
 public class PanierActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -16,6 +21,9 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
     private EditText editTextPhone;
     private EditText etprenom;
     private EditText etName;
+
+    private RecyclerView recyclerView;
+    private CartItemAdapter cartItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +39,28 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
 
         binding.logohome.setOnClickListener(this);
         binding.btnValidate.setOnClickListener(this);
+
+        // Récupérez votre RecyclerView à partir de votre layout XML
+        recyclerView = binding.rcViewPanier;
+
+        // Configurez le LayoutManager pour le RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Initialisez l'adaptateur pour le RecyclerView
+        cartItemAdapter = new CartItemAdapter(); // Vous devrez passer des données à l'adaptateur ici
+        recyclerView.setAdapter(cartItemAdapter);
+
+
+        // Obtenez les éléments du panier depuis CartManager (exemple)
+        CartManager cartManager = CartManager.getInstance();
+        List<ProductCartItem> cartItems = cartManager.getCartItems();
+
+        // Passez les éléments du panier à l'adaptateur
+        cartItemAdapter.setCartItems(cartItems);
+
+        recyclerView.setAdapter(cartItemAdapter);
     }
+
 
     @Override
     public void onClick(View v) {
