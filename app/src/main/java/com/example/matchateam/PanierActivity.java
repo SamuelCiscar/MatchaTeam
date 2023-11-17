@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.matchateam.Adapters.CartItemAdapter;
+import com.example.matchateam.Beans.CommandProductBean;
 import com.example.matchateam.Beans.CommandeBean;
+import com.example.matchateam.Beans.ProductListBean;
 import com.example.matchateam.databinding.ActivityPanierBinding;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PanierActivity extends AppCompatActivity implements View.OnClickListener {
@@ -115,14 +118,23 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
             if (!nom.isEmpty() && !prenom.isEmpty() && !telephone.isEmpty()) {
                 // Si tous les champs sont remplis, créer une nouvelle commande
                 CommandeBean commande = new CommandeBean();
+                List<ProductCartItem> produits = cartItemAdapter.getCartItems();
                 commande.setNom_commande(nom);
                 commande.setPrenom_commande(prenom);
                 commande.setTelephone_commande(telephone);
                 commande.setPrix_total_commande(calculateTotalPrice());
-                List<ProductCartItem> produits = cartItemAdapter.getCartItems();
-                commande.setProduits(produits);
+                CommandProductBean commandProduct = new CommandProductBean();
+                commandProduct.setCommand(commande);
+                ArrayList<ProductListBean> productList= new ArrayList<>();
+                for (int i = 0; i < produits.size(); i++) {
+                    ProductListBean newproduct = new ProductListBean();
+                    newproduct.setProduct(produits.get(i).getProduct());
+                    newproduct.setQuantity(produits.get(i).getQuantity());
+                    productList.add(newproduct);
+                }
+                commandProduct.setProductList(productList);
                 // Convertir la commande en JSON
-                String commandeJson = new Gson().toJson(commande);
+                String commandeJson = new Gson().toJson(commandProduct);
 
                 System.out.println(commandeJson);
 
