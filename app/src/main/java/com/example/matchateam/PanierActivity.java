@@ -104,6 +104,7 @@ public class PanierActivity extends AppCompatActivity implements View.OnClickLis
         if (v == binding.logohome) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
         if (v == binding.btnValidate) {

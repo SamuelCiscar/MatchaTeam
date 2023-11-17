@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v == binding.btCart){
             Intent intent = new Intent(this, PanierActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
